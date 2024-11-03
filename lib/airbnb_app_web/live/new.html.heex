@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Property</title>
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 50px); /* Adjust height to account for navbar */
+            padding: 20px;
+        }
+
+        /* Form Container Styling */
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Heading Styling */
+        .form-container h2 {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Form Field Styling */
+        .form-container label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="number"],
+        .form-container input[type="url"],
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-container input[type="text"]:focus,
+        .form-container input[type="number"]:focus,
+        .form-container input[type="url"]:focus,
+        .form-container textarea:focus {
+            outline: none;
+            border-color: #333;
+            background-color: #e8e8e8;
+        }
+
+        /* Textarea Styling */
+        .form-container textarea {
+            resize: vertical;
+            height: 80px;
+        }
+
+        /* Button Styling */
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #555;
+        }
+
+        /* Spacing Between Fields */
+        .space-y-4 > * + * {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-content">
+        <div class="form-container">
+            <h2>Add New Property</h2>
+            <.form for={@form} phx-submit="save" class="space-y-4">
+                <div>
+                    <label for="property_name">Property Name</label>
+                    <input type="text" id="property_name" name="property[name]" required>
+                </div>
+                <div>
+                    <label for="property_location">Location</label>
+                    <input type="text" id="property_location" name="property[location]" required>
+                </div>
+                <div>
+                    <label for="property_price">Price per Night</label>
+                    <input type="number" id="property_price" name="property[price]" required>
+                </div>
+                <div>
+                    <label for="property_description">Description</label>
+                    <textarea id="property_description" name="property[description]" required></textarea>
+                </div>
+                <div>
+                    <label for="property_image_url">Image URL</label>
+                    <input type="url" id="property_image_url" name="property[image_url]" required>
+                </div>
+                <div>
+                    <button type="submit">Add Property</button>
+                </div>
+            </.form>
+        </div>
+    </div>
+</body>
+</html>

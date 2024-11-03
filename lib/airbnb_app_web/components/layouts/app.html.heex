@@ -1,0 +1,100 @@
+<header class="flex justify-between items-center px-6 py-3 bg-white">
+  <div class="flex items-center space-x-6">
+    <a href={~p"/properties"}>
+      <img src="/images/logo.svg.png" alt="Logo" class="h-8 w-auto" />
+    </a>
+    <a href={~p"/properties/new"} class="text-black font-brand font-bold text-3xl">Add a Listing</a>
+  </div>
+
+  <div class="flex items-center space-x-5">
+  
+
+    <a href={~p"/properties"}>
+      All Properties
+    </a>
+
+    <div class="relative">
+      <button
+        type="button"
+        id="user-menu-button"
+        phx-click={AirbnbAppWeb.Layouts.App.toggle_dropdown_menu()}
+        class="focus:outline-none"
+      >
+        <img src="/images/user.png" alt="Profile Image" class="w-8 h-8 rounded-full" />
+      </button>
+    
+      <div
+        id="dropdown_menu"
+        class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-xl border border-gray-300"
+        phx-click-away={AirbnbAppWeb.Layouts.App.toggle_dropdown_menu()}
+        hidden = "true"
+      >
+        <%= if @current_user do %>
+          <.link
+            href={~p"/users/settings"}
+            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 border-b border-gray-300 border-opacity-50"
+            role="menuitem"
+            id="user-menu-item-0"
+          >
+            Signed in as <%= @current_user.email %>
+          </.link>
+     
+          <.link
+            href="/your_properties"
+            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 border-b border-gray-300 border-opacity-50"
+            role="menuitem"
+            id="user-menu-item-2"
+          >
+            Booked Properties
+          </.link>
+          <.link
+            href={~p"/users/log_out"}
+            class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+            role="menuitem"
+            method="delete"
+            id="user-menu-item-3"
+          >
+            Sign out
+          </.link>
+        <% else %>
+          <.link
+            href={~p"/users/log_in"}
+            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 border-b border-gray-300 border-opacity-50"
+            role="menuitem"
+            id="user-menu-item-0"
+          >
+            Sign in
+          </.link>
+          <.link
+            href={~p"/users/register"}
+            class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+            role="menuitem"
+            id="user-menu-item-1"
+          >
+            Register
+          </.link>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <.flash_group flash={@flash} />
+  <%= @inner_content %>
+</main>
+
+<footer class="w-full flex justify-center px-10 py-6 bg-gray-100 text-black font-brand text-xs">
+  <div class="w-full">
+    <div class="border-t border-gray-300 w-full my-4"></div>
+    <div class="flex items-center space-x-4 py-2">
+      <img src="/images/logo.svg.png" alt="Airbnb Logo" class="h-8 w-8" />
+      <p>© 2024 Airbnb</p>
+      <div class="flex space-x-4 text-gray-700">
+        <a href={~p"/"} class="hover:underline">Terms</a>
+        <a href={~p"/"} class="hover:underline">Privacy</a>
+        <a href={~p"/about"} class="hover:underline">About</a>
+      </div>
+    </div>
+  </div>
+</footer>

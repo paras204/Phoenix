@@ -1,0 +1,106 @@
+<style>
+    .property {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 16px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+
+    .property:hover {
+        transform: scale(1.02);
+    }
+
+    .property h3 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .property p {
+        color: #666;
+    }
+
+    .property img {
+        max-width: 100%;
+        border-radius: 8px;
+    }
+
+    .property button {
+        background-color: #ff5a5f;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .property button:hover {
+        background-color: #e04e4e;
+    }
+</style>
+<div>
+    <input type="text" id="search-bar" placeholder="Search properties by location..." oninput="filterProperties()" />
+    <input type="number" id="min-price" placeholder="Min price" oninput="filterProperties()" style="width: 100px; padding: 8px; margin-right: 8px; box-sizing: border-box; border: 2px solid #ccc; border-radius: 4px; transition: border-color 0.3s;" />
+    <input type="number" id="max-price" placeholder="Max price" oninput="filterProperties()" style="width: 100px; padding: 8px; margin-right: 8px; box-sizing: border-box; border: 2px solid #ccc; border-radius: 4px; transition: border-color 0.3s;" />
+</div>
+<style>
+    #search-bar, #min-price, #max-price {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        transition: border-color 0.3s;
+    }
+
+    #search-bar:focus, #min-price:focus, #max-price:focus {
+        border-color: #ff5a5f;
+        outline: none;
+    }
+</style>
+
+<script>
+    function filterProperties() {
+        const query = document.getElementById('search-bar').value.toLowerCase();
+        const minPrice = parseFloat(document.getElementById('min-price').value) || 0;
+        const maxPrice = parseFloat(document.getElementById('max-price').value) || Infinity;
+        const properties = document.querySelectorAll('.property');
+
+        properties.forEach(property => {
+            const name = property.querySelector('h3').textContent.toLowerCase();
+            const location = property.querySelector('h3').textContent.toLowerCase();
+            const price = parseFloat(property.querySelector('p').textContent.match(/[\d.]+/)[0]);
+
+            if ((name.includes(query) || location.includes(query)) && price >= minPrice && price <= maxPrice) {
+                property.style.display = '';
+            } else {
+                property.style.display = 'none';
+            }
+        });
+    }
+</script>
+<h2>Available Properties</h2>
+<div>
+    <%= if @properties do %>
+    <%= for property <- @properties do %>
+        <div class="property">
+            <h3><%= property.name %> - <%= property.location %></h3>
+           
+            <p><b>Price:</b> <%= property.price %> / night</p>
+            <p><b>ID:</b> <%= property.id %> </p>
+            <div>
+                <img src={property.image_url} alt={property.name} />
+            </div>
+            <p><%= get_preview_text(property) %></p>
+            <button phx-click="delete_property" phx-value-id={property.id}>Delete</button>
+        
+            <.link href={~p"/properties/#{property.id}/booking"}>Book Now</.link>
+        </div>
+    <% end %>
+    <% else %>
+  <p>No properties available.</p>
+<% end %>
+</div>
